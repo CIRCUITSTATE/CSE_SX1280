@@ -1,4 +1,4 @@
-/* sx1280OverSpi.cpp - Library interacting with and sending messages through a 2.4Ghz Lora modem
+/* CSE_SX1280.cpp - Library interacting with and sending messages through a 2.4Ghz Lora modem
    Created by Christopher Schorn, August 16, 2023.
    Released into the public domain.
 
@@ -7,9 +7,9 @@
 
 #include "Arduino.h"
 #include "SPI.h"
-#include "sx1280OverSpi.h"
+#include "CSE_SX1280.h"
 
-sx1280OverSpi::sx1280OverSpi( uint8_t cssPin,   
+CSE_SX1280::CSE_SX1280( uint8_t cssPin,   
                               uint8_t busyPin,
                               uint8_t resetPin ){
     sx1280CssPin = cssPin;   
@@ -17,7 +17,7 @@ sx1280OverSpi::sx1280OverSpi( uint8_t cssPin,
     sx1280ResetPin = resetPin;
 }
 
-void sx1280OverSpi::begin( ){
+void CSE_SX1280::begin( ){
 
     pinMode( sx1280CssPin, OUTPUT );
     pinMode( sx1280BusyPin, INPUT );
@@ -27,7 +27,7 @@ void sx1280OverSpi::begin( ){
 
 /*  Driving the chip select pin low 
     Transactions with sx1280 start with chip select low */
-void sx1280OverSpi::sx1280Select(){
+void CSE_SX1280::sx1280Select(){
 
     asm volatile ("nop \n nop \n nop");
     digitalWrite( sx1280CssPin, 0 );
@@ -36,21 +36,21 @@ void sx1280OverSpi::sx1280Select(){
 
 /*  Driving the chip select pin high 
     Transactions with sx1280 end with chip select high */
-void sx1280OverSpi::sx1280Deselect(){
+void CSE_SX1280::sx1280Deselect(){
 
      asm volatile ("nop \n nop \n nop");
      digitalWrite( sx1280CssPin, 1 );
      asm volatile ("nop \n nop \n nop");
 }
 
-void sx1280OverSpi::sx1280Reset( ){
+void CSE_SX1280::sx1280Reset( ){
 
     digitalWrite( sx1280ResetPin, 0 ); /* Resetting sx1280 during startup */
     asm volatile ("nop \n nop \n nop");
     digitalWrite( sx1280ResetPin, 1 );
 }
 
-void sx1280OverSpi::zeroingAnArray( uint8_t arrayToZero[], 
+void CSE_SX1280::zeroingAnArray( uint8_t arrayToZero[], 
                                     uint16_t arrayLength ){
 
     for( uint16_t i = 0; i < arrayLength; i ++ ){
@@ -59,7 +59,7 @@ void sx1280OverSpi::zeroingAnArray( uint8_t arrayToZero[],
 }
 
 /* Function sending common transciever settings to sx1280 */ 
-void sx1280OverSpi::sx1280Setup( uint8_t standbyMode, 
+void CSE_SX1280::sx1280Setup( uint8_t standbyMode, 
                                  uint8_t packetType, 
                                  uint8_t rfFrequency2316,
                                  uint8_t rfFrequency158, 
@@ -284,7 +284,7 @@ void sx1280OverSpi::sx1280Setup( uint8_t standbyMode,
 
 
 /* Function setting up and running tx operation on an sx1280, taking 255 byte message packets */
-void sx1280OverSpi::sx1280Tx( uint8_t power, 
+void CSE_SX1280::sx1280Tx( uint8_t power, 
                               uint8_t rampTime, 
                               uint8_t outboundMessage[ ],
                               uint8_t txIrq158, 
@@ -462,7 +462,7 @@ void sx1280OverSpi::sx1280Tx( uint8_t power,
 
 
 /* Function setting up and running rx operation on an sx1280, 2.4Ghz LORA Modem*/
-void sx1280OverSpi::sx1280Rx( uint8_t rxIrq158, 
+void CSE_SX1280::sx1280Rx( uint8_t rxIrq158, 
                               uint8_t rxIrq70, 
                               uint8_t rxPeriodBase,
                               uint8_t rxPeriodBaseCount158, 

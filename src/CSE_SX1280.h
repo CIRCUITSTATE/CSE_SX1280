@@ -1,9 +1,9 @@
-/* sx1280OverSpi.h - Library interacting with and sending messages through a 2.4Ghz Lora modem
+/* CSE_SX1280.h - Library interacting with and sending messages through a 2.4Ghz Lora modem
    Created by Christopher Schorn, August 16, 2023.
    Released into the public domain. */
 
-#ifndef SX1280OVERSPI_H
-#define SX1280OVERSPI_H
+#ifndef CSE_SX1280_H
+#define CSE_SX1280_H
 
 #include "Arduino.h"
 
@@ -272,10 +272,10 @@
 #define SETADVANCEDRANGING 0x9A
 
 
-class sx1280OverSpi{
+class CSE_SX1280{
 
   public:
-    sx1280OverSpi( uint8_t cssPin, 
+    CSE_SX1280( uint8_t cssPin, 
                    uint8_t busyPin, 
                    uint8_t resetPin );
     void begin( );
