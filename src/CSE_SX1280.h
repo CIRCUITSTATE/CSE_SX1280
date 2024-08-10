@@ -275,46 +275,49 @@
 class CSE_SX1280{
 
   public:
-    CSE_SX1280( uint8_t cssPin, 
-                   uint8_t busyPin, 
-                   uint8_t resetPin );
-    void begin( );
-    void sx1280Select( );
-    void sx1280Deselect( );
-    void sx1280Reset( );
+    CSE_SX1280 (uint8_t cssPin, uint8_t busyPin, uint8_t resetPin );
+    void begin();
+    void sx1280Select();
+    void sx1280Deselect();
+    void sx1280Reset();
+    bool isBusy();
+    void zeroingAnArray (uint8_t arrayToZero[], uint16_t arrayLength );
 
-    void zeroingAnArray( uint8_t arrayToZero[], 
-                         uint16_t arrayLength );
+    void rfSetup (
+      uint8_t standbyMode, 
+      uint8_t packetType, 
+      uint8_t rfFrequency2316,
+      uint8_t rfFrequency158, 
+      uint8_t rfFrequency70, 
+      uint8_t spreadingFactor,
+      uint8_t bandwidth, 
+      uint8_t codingRate, 
+      uint8_t preambleLength, 
+      uint8_t headerType, 
+      uint8_t cyclicalRedundancyCheck, 
+      uint8_t chirpInvert, 
+      uint8_t *outboundMessage
+    );
 
-    void sx1280Setup( uint8_t standbyMode, 
-                      uint8_t packetType, 
-                      uint8_t rfFrequency2316,
-                      uint8_t rfFrequency158, 
-                      uint8_t rfFrequency70, 
-                      uint8_t spreadingFactor,
-                      uint8_t bandwidth, 
-                      uint8_t codingRate, 
-                      uint8_t preambleLength, 
-                      uint8_t headerType, 
-                      uint8_t cyclicalRedundancyCheck, 
-                      uint8_t chirpInvert, 
-                      uint8_t *outboundMessage );
+    void txSetup (
+      uint8_t power, 
+      uint8_t rampTime, 
+      uint8_t *outboundMessage,
+      uint8_t txIrq158, 
+      uint8_t txIrq70, 
+      uint8_t txPeriodBase,
+      uint8_t txPeriodBaseCount158, 
+      uint8_t txPeriodBaseCount70
+    );
 
-    void sx1280Tx( uint8_t power, 
-                   uint8_t rampTime, 
-                   uint8_t *outboundMessage,
-                   uint8_t txIrq158, 
-                   uint8_t txIrq70, 
-                   uint8_t txPeriodBase,
-                   uint8_t txPeriodBaseCount158, 
-                   uint8_t txPeriodBaseCount70 );
-
-    void sx1280Rx( uint8_t rxIrq158, 
-                   uint8_t rxIrq70, 
-                   uint8_t rxPeriodBase,
-                   uint8_t rxPeriodBaseCount158, 
-                   uint8_t rxPeriodBaseCount70,
-                   uint8_t *inboundMessage );
+    void rxSetup (
+      uint8_t rxIrq158, 
+      uint8_t rxIrq70, 
+      uint8_t rxPeriodBase,
+      uint8_t rxPeriodBaseCount158, 
+      uint8_t rxPeriodBaseCount70,
+      uint8_t *inboundMessage
+    );
 
   private:
     uint8_t sx1280CssPin;   
